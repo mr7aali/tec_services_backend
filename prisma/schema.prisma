@@ -13,7 +13,7 @@ datasource db {
 model User {
   user_id String @id @default(uuid())
 
-  email        String
+  email        String @unique
   password     String
   role         String // Use enum or predefined roles
   first_name   String
