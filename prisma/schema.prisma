@@ -14,7 +14,7 @@ datasource db {
 
 
 model User {
-  userid       Int            @id @default(autoincrement())
+  user_id       String            @id @default(uuid())
   username     String
   password     String
   email        String
@@ -37,7 +37,7 @@ model User {
 // Define the UserProfile table
 model UserProfile {
   profileid    Int    @id @default(autoincrement())
-  userid       Int    @unique
+  user_id       String    @unique
   firstname    String
   lastname     String
   phone        String
@@ -45,13 +45,13 @@ model UserProfile {
   preferences  String
   profileimage String
 
-  user         User   @relation(fields: [userid], references: [userid])
+  user         User   @relation(fields: [user_id], references: [user_id])
 }
 
 
 // Define the Admin table
 model Admin {
-  adminid                Int         @id @default(autoincrement())
+  admin_id                String         @id @default(uuid())
   username               String
   password               String
   email                  String
@@ -66,7 +66,7 @@ model Admin {
 
 // Define the Service table
 model Service {
-  serviceid    Int       @id @default(autoincrement())
+  service_id    String       @id @default(uuid())
   servicename  String
   category     String
   description  String
@@ -83,15 +83,15 @@ model Service {
 // Define the Booking table
 model Booking {
   bookingid    Int      @id @default(autoincrement())
-  userid       Int 
-  serviceid    Int
+  user_id       String 
+  service_id    String
   bookingdate  DateTime
   bookingtime  String
   status       String
 
 
-  user         User     @relation(fields: [userid], references: [userid])
-  service      Service  @relation(fields: [serviceid], references: [serviceid])
+  user         User     @relation(fields: [user_id], references: [user_id])
+  service      Service  @relation(fields: [service_id], references: [service_id])
   // Admin        Admin?   @relation(fields: [adminAdminid], references: [adminid])
   // adminAdminid Int?
 }
@@ -99,38 +99,38 @@ model Booking {
 // Define the Review table
 model Review {
   reviewid   Int      @id @default(autoincrement())
-  userid     Int
-  serviceid  Int
+  user_id     String
+  service_id  String
   rating     Int
   comment    String
   reviewdate DateTime
 
 
-  user       User     @relation(fields: [userid], references: [userid])
-  service    Service  @relation(fields: [serviceid], references: [serviceid])
+  user       User     @relation(fields: [user_id], references: [user_id])
+  service    Service  @relation(fields: [service_id], references: [service_id])
 }
 
 
 // Define the Feedback table
 model Feedback {
   feedbackid   Int      @id @default(autoincrement())
-  userid       Int
+  user_id       String
   subject      String
   comment      String
   feedbackdate DateTime
 
-  user         User     @relation(fields: [userid], references: [userid])
+  user         User     @relation(fields: [user_id], references: [user_id])
 }
 
 
 // Define the Notification table (optional)
 model Notification {
   notificationid Int      @id @default(autoincrement())
-  userid         Int
+  user_id         String
   message        String
   date           DateTime
   status         String
-  user           User     @relation(fields: [userid], references: [userid])
+  user           User     @relation(fields: [user_id], references: [user_id])
 }
 
 
@@ -146,9 +146,9 @@ model Content {
   title     String
   body      String
   type      String
-  admin_id  Int
+  admin_id  String
 
-  author    Admin  @relation(fields: [admin_id], references: [adminid])
+  author    Admin  @relation(fields: [admin_id], references: [admin_id])
 }
 
 
