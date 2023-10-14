@@ -10,137 +10,106 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// schema.prisma
-
-
 model User {
-  user_id       String            @id @default(uuid())
-  username     String
-  password     String
-  email        String
-  role         String // Use enum or predefined roles
+  user_id  String @id @default(uuid())
+  email    String
+  password String
+  role     String // Use enum or predefined roles
 
-
-  profile      UserProfile?
-  bookings     Booking[]
-  reviews      Review[]
-  feedbacks    Feedback[]
-  // Service      Service[]
-  Notification Notification[]
-  // Admin        Admin?         @relation(fields: [adminAdminid], references: [adminid])
-  // adminAdminid Int?
-}
-
-
-
-
-// Define the UserProfile table
-model UserProfile {
-  profileid    Int    @id @default(autoincrement())
-  user_id       String    @unique
-  firstname    String
-  lastname     String
+  first_name   String
+  last_name    String
   phone        String
   address      String
   preferences  String
   profileimage String
 
-  user         User   @relation(fields: [user_id], references: [user_id])
+  bookings     Booking[]
+  reviews      Review[]
+  feedbacks    Feedback[]
+  Notification Notification[]
+  Admin        Admin?
+
+  @@map("user")
 }
 
-
-// Define the Admin table
 model Admin {
-  admin_id                String         @id @default(uuid())
-  username               String
-  password               String
-  email                  String
-  role                   String
+  admin_id String @id @default(uuid())
+  user_id  String @unique
 
+  contents Content[]
 
-  contents               Content[]
-  // bookings               Booking[]
-  // SuperAdmin             SuperAdmin? @relation(fields: [superAdminSuperadminid], references: [superadminid])
-  // superAdminSuperadminid Int?
+  user User @relation(fields: [user_id], references: [user_id])
+
+  @@map("admin")
 }
 
-// Define the Service table
 model Service {
-  service_id    String       @id @default(uuid())
+  service_id   String @id @default(uuid())
   servicename  String
   category     String
   description  String
   price        Float
   availability String
   providerid   Int
-  // provider     User      @relation(fields: [providerid], references: [userid])
+
   bookings     Booking[]
   Review       Review[]
-  // Admin        Admin?    @relation(fields: [adminAdminid], references: [adminid])
   adminAdminid Int?
+
+  @@map("service")
 }
 
-// Define the Booking table
 model Booking {
-  bookingid    Int      @id @default(autoincrement())
-  user_id       String 
-  service_id    String
-  bookingdate  DateTime
-  bookingtime  String
-  status       String
-
-
-  user         User     @relation(fields: [user_id], references: [user_id])
-  service      Service  @relation(fields: [service_id], references: [service_id])
-  // Admin        Admin?   @relation(fields: [adminAdminid], references: [adminid])
-  // adminAdminid Int?
-}
-
-// Define the Review table
-model Review {
-  reviewid   Int      @id @default(autoincrement())
+  bookingid   Int      @id @default(autoincrement())
   user_id     String
   service_id  String
+  bookingdate DateTime
+  bookingtime String
+  status      String
+
+  user    User    @relation(fields: [user_id], references: [user_id])
+  service Service @relation(fields: [service_id], references: [service_id])
+
+  @@map("booking")
+}
+
+model Review {
+  reviewid   Int      @id @default(autoincrement())
+  user_id    String
+  service_id String
   rating     Int
   comment    String
   reviewdate DateTime
 
+  user    User    @relation(fields: [user_id], references: [user_id])
+  service Service @relation(fields: [service_id], references: [service_id])
 
-  user       User     @relation(fields: [user_id], references: [user_id])
-  service    Service  @relation(fields: [service_id], references: [service_id])
+  @@map("review")
 }
 
-
-// Define the Feedback table
 model Feedback {
   feedbackid   Int      @id @default(autoincrement())
-  user_id       String
+  user_id      String
   subject      String
   comment      String
   feedbackdate DateTime
 
-  user         User     @relation(fields: [user_id], references: [user_id])
+  user User @relation(fields: [user_id], references: [user_id])
+
+  @@map("feedback")
 }
 
-
-// Define the Notification table (optional)
 model Notification {
   notificationid Int      @id @default(autoincrement())
-  user_id         String
+  user_id        String
   message        String
   date           DateTime
   status         String
   user           User     @relation(fields: [user_id], references: [user_id])
+
+  @@map("notification")
 }
 
-
-
-
-
-
-
-
-// Define the Content table
 model Content {
   contentid Int    @id @default(autoincrement())
   title     String
@@ -148,16 +117,7 @@ model Content {
   type      String
   admin_id  String
 
-  author    Admin  @relation(fields: [admin_id], references: [admin_id])
-}
+  author Admin @relation(fields: [admin_id], references: [admin_id])
 
-
-
-// Define the SuperAdmin table
-model SuperAdmin {
-  superadminid Int     @id @default(autoincrement())
-  username     String
-  password     String
-  email        String
-  // superAdmins  Admin[]
+  @@map("content")
 }
