@@ -14,7 +14,7 @@ const createUser = catchAsync(
 
 
 
-        sendResponse<User>(res, {
+        sendResponse<Partial<User>>(res, {
             success: true,
             statusCode: 200,
             message: "User created successfully!",
@@ -22,12 +22,45 @@ const createUser = catchAsync(
         })
     });
 
+const getSingle = catchAsync(
+    async (req: Request, res: Response) => {
 
-    
+        const id = req.params.id;
+        const result = await UserService.getSingle(id);
+
+
+
+        sendResponse<Partial<User>>(res, {
+            success: true,
+            statusCode: 200,
+            message: "User get successfully!",
+            data: result
+        })
+    });
+
+const update = catchAsync(
+    async (req: Request, res: Response) => {
+
+        const id = req.params.id;
+        const data = req.body;
+        const result = await UserService.update( id, data );
+
+
+
+        sendResponse<Partial<User>>(res, {
+            success: true,
+            statusCode: 200,
+            message: "User get successfully!",
+            data: result
+        })
+    });
+
+
+
 
 
 
 
 export const UserController = {
-    createUser
+    createUser, getSingle,update
 }
