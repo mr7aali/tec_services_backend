@@ -1,0 +1,139 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// Define the User table
+model User {
+  userid       Int            @id @default(autoincrement())
+  username     String
+  password     String
+  email        String
+  role         String // Use enum or predefined roles
+  profile      UserProfile?
+  bookings     Booking[]
+  reviews      Review[]
+  feedbacks    Feedback[]
+  Service      Service[]
+  Notification Notification[]
+  Admin        Admin?         @relation(fields: [adminAdminid], references: [adminid])
+  adminAdminid Int?
+}
+
+// Define the UserProfile table
+model UserProfile {
+  profileid    Int    @id @default(autoincrement())
+  userid       Int    @unique
+  firstname    String
+  lastname     String
+  phone        String
+  address      String
+  preferences  String
+  profileimage String
+  user         User   @relation(fields: [userid], references: [userid])
+}
+
+// Define the Service table
+model Service {
+  serviceid    Int       @id @default(autoincrement())
+  servicename  String
+  category     String
+  description  String
+  price        Float
+  availability String
+  providerid   Int
+  provider     User      @relation(fields: [providerid], references: [userid])
+  bookings     Booking[]
+  Review       Review[]
+  Admin        Admin?    @relation(fields: [adminAdminid], references: [adminid])
+  adminAdminid Int?
+}
+
+// Define the Booking table
+model Booking {
+  bookingid    Int      @id @default(autoincrement())
+  userid       Int
+  serviceid    Int
+  bookingdate  DateTime
+  bookingtime  String
+  status       String
+  user         User     @relation(fields: [userid], references: [userid])
+  service      Service  @relation(fields: [serviceid], references: [serviceid])
+  Admin        Admin?   @relation(fields: [adminAdminid], references: [adminid])
+  adminAdminid Int?
+}
+
+// Define the Review table
+model Review {
+  reviewid   Int      @id @default(autoincrement())
+  userid     Int
+  serviceid  Int
+  rating     Int
+  comment    String
+  reviewdate DateTime
+  user       User     @relation(fields: [userid], references: [userid])
+  service    Service  @relation(fields: [serviceid], references: [serviceid])
+}
+
+// Define the Feedback table
+model Feedback {
+  feedbackid   Int      @id @default(autoincrement())
+  userid       Int
+  subject      String
+  comment      String
+  feedbackdate DateTime
+  user         User     @relation(fields: [userid], references: [userid])
+}
+
+// Define the Notification table (optional)
+model Notification {
+  notificationid Int      @id @default(autoincrement())
+  userid         Int
+  message        String
+  date           DateTime
+  status         String
+  user           User     @relation(fields: [userid], references: [userid])
+}
+
+// Define the Admin table
+model Admin {
+  adminid                Int         @id @default(autoincrement())
+  username               String
+  password               String
+  email                  String
+  role                   String
+  users                  User[]
+  services               Service[]
+  contents               Content[]
+  bookings               Booking[]
+  SuperAdmin             SuperAdmin? @relation(fields: [superAdminSuperadminid], references: [superadminid])
+  superAdminSuperadminid Int?
+}
+
+// Define the Content table
+model Content {
+  contentid Int    @id @default(autoincrement())
+  title     String
+  body      String
+  type      String
+  authorid  Int
+  author    Admin  @relation(fields: [authorid], references: [adminid])
+}
+
+// Define the SuperAdmin table
+model SuperAdmin {
+  superadminid Int     @id @default(autoincrement())
+  username     String
+  password     String
+  email        String
+  superAdmins  Admin[]
+}
