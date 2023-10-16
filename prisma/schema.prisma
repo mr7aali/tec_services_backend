@@ -13,14 +13,14 @@ datasource db {
 model User {
   user_id String @id @default(uuid())
 
-  email        String @unique
+  email        String  @unique
   password     String
-  role         String // Use enum or predefined roles
+  role         String  @default("user") // Use enum or predefined roles
   first_name   String
   last_name    String
   phone        String
   address      String
-  profileimage String
+  profileimage String?
 
   bookings     Booking[]
   reviews      Review[]
@@ -44,16 +44,19 @@ model Admin {
 
 model Service {
   service_id   String @id @default(uuid())
-  servicename  String
+
+
+  service_name  String
   category     String
   description  String
-  price        Float
+  price        String
   availability String
-  providerid   Int
+
+  // providerid   Int
 
   bookings     Booking[]
   Review       Review[]
-  adminAdminid Int?
+  // adminAdminid Int?
 
   @@map("service")
 }

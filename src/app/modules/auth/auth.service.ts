@@ -1,8 +1,6 @@
 import { User } from "@prisma/client"
-
 import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
-
 import { createToken, verifyToken } from "../../../helpers/jwtHelpers";
 import { ILoginResponse, IRefreshTokenResponse, Itoken } from "./auth.interface";
 import { prisma } from "../../../sheared/prisma";

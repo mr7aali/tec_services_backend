@@ -1,84 +1,14 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Admin` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Booking` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Content` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Feedback` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Notification` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Review` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Service` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `SuperAdmin` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `UserProfile` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "Booking" DROP CONSTRAINT "Booking_service_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Booking" DROP CONSTRAINT "Booking_user_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Content" DROP CONSTRAINT "Content_admin_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Feedback" DROP CONSTRAINT "Feedback_user_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Notification" DROP CONSTRAINT "Notification_user_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Review" DROP CONSTRAINT "Review_service_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "Review" DROP CONSTRAINT "Review_user_id_fkey";
-
--- DropForeignKey
-ALTER TABLE "UserProfile" DROP CONSTRAINT "UserProfile_user_id_fkey";
-
--- DropTable
-DROP TABLE "Admin";
-
--- DropTable
-DROP TABLE "Booking";
-
--- DropTable
-DROP TABLE "Content";
-
--- DropTable
-DROP TABLE "Feedback";
-
--- DropTable
-DROP TABLE "Notification";
-
--- DropTable
-DROP TABLE "Review";
-
--- DropTable
-DROP TABLE "Service";
-
--- DropTable
-DROP TABLE "SuperAdmin";
-
--- DropTable
-DROP TABLE "User";
-
--- DropTable
-DROP TABLE "UserProfile";
-
 -- CreateTable
 CREATE TABLE "user" (
     "user_id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" TEXT NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'user',
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "address" TEXT NOT NULL,
-    "preferences" TEXT NOT NULL,
-    "profileimage" TEXT NOT NULL,
+    "profileimage" TEXT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("user_id")
 );
@@ -161,6 +91,9 @@ CREATE TABLE "content" (
 
     CONSTRAINT "content_pkey" PRIMARY KEY ("contentid")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "admin_user_id_key" ON "admin"("user_id");

@@ -18,9 +18,4 @@ router.patch("/update/:id",
     validateRequest(UserValidation.UpdateUserZodSchema),
     UserController.update);
 
-
-
-
-
 export const UserRoutes = router;
-
