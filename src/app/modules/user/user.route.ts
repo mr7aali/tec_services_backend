@@ -11,6 +11,12 @@ const router = express.Router();
 router.post("/signup",
     validateRequest(UserValidation.createUserZodSchema),
     UserController.createUser);
+
+router.post("/signup-admin",
+    validateRequest(UserValidation.createAdminZodSchema),
+    UserController.createAdmin);
+
+
 router.get("/:id",
     UserController.getSingle);
 

@@ -4,6 +4,8 @@ import { authRoutes } from '../modules/auth/auth.router';
 import { ServiceRoute } from '../modules/service/service.route';
 import { BookingRoute } from '../modules/booking/booking.route';
 import { ReviewRoute } from '../modules/review/review.route';
+import { FeedbackRoute } from '../modules/feedback/review.route';
+import { ContentRoute } from '../modules/content/content.route';
 
 
 const router = express.Router();
@@ -27,6 +29,14 @@ const moduleRoutes = [
     {
         path: '/review',
         route:ReviewRoute
+    },
+    {
+        path: '/feedback',
+        route:FeedbackRoute
+    },
+    {
+        path: '/content',
+        route:ContentRoute
     },
 ];
 

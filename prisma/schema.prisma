@@ -76,9 +76,6 @@ model Booking {
 }
 
 model Review {
-
-
-  
   review_id  Int      @id @default(autoincrement())
   user_id    String
   service_id String
@@ -91,7 +88,6 @@ model Review {
 
   @@map("review")
 }
-
 
 model Feedback {
   feedbackid   Int      @id @default(autoincrement())
@@ -118,6 +114,8 @@ model Notification {
 
 model Content {
   contentid Int    @id @default(autoincrement())
+
+  
   title     String
   body      String
   type      String

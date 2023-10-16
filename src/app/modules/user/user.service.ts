@@ -1,4 +1,4 @@
-import { User } from "@prisma/client"
+import { Admin, User } from "@prisma/client"
 import { prisma } from '../../../sheared/prisma';
 
 
@@ -17,6 +17,31 @@ const createUser = async (data: User): Promise<Partial<User>> => {
     })
     return result;
 };
+const createAdmin = async (data: Admin): Promise<Admin> => {
+   
+    const result = await prisma.$transaction(async (prisma) => {
+        // Update the user's role to "admin"
+        await prisma.user.update({
+            where: { user_id: data.user_id },
+            data: {
+                role: "admin"
+            }
+        });
+
+        // Create the admin user
+        const adminResult = await prisma.admin.create({
+            data
+        });
+
+        return adminResult;
+    });
+
+    return result;
+
+
+
+};
+
 const getSingle = async (id: string): Promise<User | null> => {
 
     const result = await prisma.user.findUnique({
@@ -34,8 +59,8 @@ const update = async (id: string, data: User): Promise<User | null> => {
 
 
 
-
-
 export const UserService = {
-    createUser, getSingle, update
+    createUser,
+    getSingle,
+    update, createAdmin
 }

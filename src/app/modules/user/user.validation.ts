@@ -25,7 +25,12 @@ const UpdateUserZodSchema = z.object({
         role: z.union([z.undefined(), z.null()]).optional()
     })
 });
+const createAdminZodSchema = z.object({
+    body: z.object({
+        user_id: z.string({ required_error: "user_id is required" })
+    })
+});
 
 export const UserValidation = {
-    createUserZodSchema,UpdateUserZodSchema
+    createUserZodSchema, UpdateUserZodSchema, createAdminZodSchema
 }
