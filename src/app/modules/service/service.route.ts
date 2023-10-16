@@ -11,6 +11,10 @@ const router = express.Router();
 router.post("/create",
     validateRequest(ServiceValidation.createServiceZodSchema),
     ServiceController.createService);
+router.get("/get",
+    ServiceController.getAll);
+router.get("/:id",
+    ServiceController.getSingle);
 
 
 export const ServiceRoute = router;
