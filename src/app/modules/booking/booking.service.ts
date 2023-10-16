@@ -9,9 +9,6 @@ const create = async (data: Booking): Promise<Booking> => {
 };
 
 
-
-
-
 export const BookingService = {
     create
 }
