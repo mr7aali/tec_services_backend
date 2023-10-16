@@ -1,4 +1,4 @@
-import { Service, User } from "@prisma/client"
+import { Service} from "@prisma/client"
 import { prisma } from '../../../sheared/prisma';
 
 

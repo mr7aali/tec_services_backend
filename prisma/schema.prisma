@@ -27,9 +27,10 @@ model User {
   feedbacks    Feedback[]
   Notification Notification[]
   Admin        Admin?
-
   @@map("user")
 }
+
+
 
 model Admin {
   admin_id String @id @default(uuid())
@@ -61,8 +62,11 @@ model Service {
   @@map("service")
 }
 
+
+
 model Booking {
   bookingid   Int      @id @default(autoincrement())
+  
   user_id     String
   service_id  String
   bookingdate DateTime
@@ -74,6 +78,10 @@ model Booking {
 
   @@map("booking")
 }
+
+
+
+
 
 model Review {
   reviewid   Int      @id @default(autoincrement())
