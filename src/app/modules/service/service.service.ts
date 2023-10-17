@@ -4,13 +4,13 @@ import { prisma } from '../../../sheared/prisma';
 
 const createService = async (data: Service): Promise<Service> => {
     const result = await prisma.service.create({ data });
-    console.log(result);
+   
     return result;
 };
 
 const getAll = async (): Promise<Service[]> => {
     const result = await prisma.service.findMany({  });
-    console.log(result);
+   
     return result;
 };
 const getSingle = async (id: string): Promise<Service|null> => {
@@ -19,7 +19,7 @@ const getSingle = async (id: string): Promise<Service|null> => {
             service_id:id
         }
     });
-    console.log(result);
+   
     return result;
 };
 

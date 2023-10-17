@@ -10,7 +10,7 @@ const create = async (data: Review): Promise<Review> => {
             user: true
         }
     });
-    console.log(result);
+    
     return result;
 };
 

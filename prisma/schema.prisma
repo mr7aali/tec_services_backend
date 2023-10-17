@@ -76,7 +76,8 @@ model Booking {
 }
 
 model Review {
-  review_id  Int      @id @default(autoincrement())
+
+  review_id  String      @id @default(uuid())
   user_id    String
   service_id String
   rating     Int
@@ -90,7 +91,7 @@ model Review {
 }
 
 model Feedback {
-  feedbackid   Int      @id @default(autoincrement())
+  feedbackid   String      @id @default(uuid())
   user_id      String
   subject      String
   comment      String
@@ -102,7 +103,7 @@ model Feedback {
 }
 
 model Notification {
-  notificationid Int      @id @default(autoincrement())
+  notificationid String      @id @default(uuid())
   user_id        String
   message        String
   date           DateTime
@@ -113,7 +114,7 @@ model Notification {
 }
 
 model Content {
-  contentid Int    @id @default(autoincrement())
+  contentid String    @id @default(uuid())
 
   
   title     String

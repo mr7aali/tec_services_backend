@@ -45,7 +45,7 @@ const createAdmin = async (data: Admin): Promise<Admin> => {
 const getSingle = async (id: string): Promise<User | null> => {
 
     const result = await prisma.user.findUnique({
-        where: { user_id: id }
+        where: { user_id: id },include:{}
     })
     return result;
 };

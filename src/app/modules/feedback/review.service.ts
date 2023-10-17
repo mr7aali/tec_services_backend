@@ -9,7 +9,7 @@ const create = async (data: Feedback): Promise<Feedback> => {
             user: true
         }
     });
-    console.log(result);
+   
     return result;
 };
 
