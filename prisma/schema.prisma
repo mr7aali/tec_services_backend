@@ -67,8 +67,9 @@ model Booking {
   service_id  String
   bookingdate DateTime
   bookingtime String
-  status      String
+  status      String  @default("pending")
 
+// pending/accepted/rejected)
   user    User    @relation(fields: [user_id], references: [user_id])
   service Service @relation(fields: [service_id], references: [service_id])
 
